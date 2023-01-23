@@ -8,11 +8,15 @@ except ImportError:
     import readline
 import asyncio
 import logging
+import typer
+
+app = typer.Typer()
+
 
 # TODO: load config from file or input
-HOST = "192.168.0.30"
-PORT = 25575
-PASSWORD = "logitech"
+# HOST = "192.168.0.30"
+# PORT = 25575
+# PASSWORD = "logitech"
 
 LOG_FILENAME = "/tmp/completer.log"
 logging.basicConfig(
@@ -23,7 +27,7 @@ logging.basicConfig(
 
 # 注册补全功能
 with open(history_path, "r") as f:
-    OPTIONS = f.readlines()
+    OPTIONS = [line.replace("\n", "") for line in f.readlines()]
 
 readline.set_completer(SimpleCompleter(OPTIONS).complete)
 
@@ -32,8 +36,13 @@ readline.parse_and_bind("tab: complete")
 # 使用 vi 模式
 readline.parse_and_bind("set editing-mode vi")
 
-if __name__ == "__main__":
 
-    connection = Rcon(host=HOST, port=PORT, password=PASSWORD)
+def main(host: str, port: int, password: str):
+
+    connection = Rcon(host=host, port=port, password=password)
 
     asyncio.run(connection.mainloop())
+
+
+if __name__ == "__main__":
+    typer.run(main)

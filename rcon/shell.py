@@ -26,12 +26,12 @@ class Rcon:
         try:
             command = "list"
             response = await self.client.send_cmd(command)
-            print(f'[{datetime.now().strftime("%H:%M:%S")}] {response[0]}')
+            print(f'[{datetime.now().strftime("%H:%M:%S")}] {response[0]}\n')
 
             while True:
                 command = input("> ").strip()
                 response = await self.client.send_cmd(command)
-                print(f'[{datetime.now().strftime("%H:%M:%S")}] {response[0]}')
+                print(f'[{datetime.now().strftime("%H:%M:%S")}] {response[0]}\n')
 
         except KeyboardInterrupt:
             await self.client.close()

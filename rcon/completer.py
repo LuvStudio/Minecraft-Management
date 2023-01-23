@@ -28,4 +28,3 @@ class SimpleCompleter:
             response = None
         logging.debug("complete(%s, %s) => %s", repr(text), state, repr(response))
         return response
-
